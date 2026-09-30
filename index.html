@@ -1,12 +1,23 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
 <title>Para Tu 🌙</title>
 
+
 <style>
+
+/* ==================================================
+   CONFIGURACIÓN GENERAL
+================================================== */
 
 * {
     margin: 0;
@@ -16,13 +27,17 @@
 
 html,
 body {
+
     width: 100%;
     height: 100%;
+
     overflow: hidden;
+
     font-family: Georgia, serif;
 }
 
 body {
+
     background: #050b18;
 }
 
@@ -40,24 +55,78 @@ body {
 
     overflow: hidden;
 
+    /*
+       ESTE SIGUE SIENDO EL FONDO ORIGINAL
+       DE LA PANTALLA DE INICIO
+    */
+
     background-image:
         url("bosque-noche.jpg");
 
     background-size: cover;
+
     background-position: center;
 
     background-color: #050b18;
-
-    transition:
-        filter 8s ease,
-        background-position 12s ease;
-
 }
 
 
 /* ==================================================
-   OSCURECER EL PAISAJE
-   Esto ayuda a que no canse la vista
+   PAISAJE MÁGICO
+   APARECE SOLAMENTE DESPUÉS DE "EMPEZAR"
+================================================== */
+
+.escena::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    /*
+       ESTA ES LA IMAGEN QUE GENERAMOS
+    */
+
+    background-image:
+        url("paisaje.png");
+
+    background-size: cover;
+
+    background-position: center;
+
+    opacity: 0;
+
+    transform:
+        scale(1.04);
+
+    z-index: 1;
+
+    pointer-events: none;
+
+    transition:
+
+        opacity 2.4s ease,
+
+        transform 5s ease;
+}
+
+
+/*
+   CUANDO SE PRESIONA "EMPEZAR"
+*/
+
+.escena.iniciado::before {
+
+    opacity: 1;
+
+    transform:
+        scale(1);
+}
+
+
+/* ==================================================
+   OSCURIDAD DE LA PANTALLA INICIAL
 ================================================== */
 
 .oscuridad {
@@ -69,10 +138,15 @@ body {
     background:
 
         linear-gradient(
+
             to bottom,
+
             rgba(2, 8, 25, 0.48),
+
             rgba(4, 12, 30, 0.28),
+
             rgba(2, 8, 20, 0.55)
+
         );
 
     pointer-events: none;
@@ -80,13 +154,24 @@ body {
     z-index: 2;
 
     transition:
-        background 8s ease;
 
+        opacity 1.8s ease;
+}
+
+
+/*
+   AL COMENZAR, QUITAMOS ESTA CAPA
+   PARA QUE EL PAISAJE SE VEA LIMPIO
+*/
+
+.escena.iniciado .oscuridad {
+
+    opacity: 0;
 }
 
 
 /* ==================================================
-   LUZ SUAVE DE LUNA
+   LUZ DE LUNA ORIGINAL
 ================================================== */
 
 .luz-luna {
@@ -97,17 +182,22 @@ body {
     height: 500px;
 
     top: -180px;
-    left: 0px;
+    left: 0;
 
     border-radius: 50%;
 
     background:
 
         radial-gradient(
+
             circle,
+
             rgba(160,185,255,0.13) 0%,
+
             rgba(100,130,210,0.07) 35%,
+
             transparent 70%
+
         );
 
     pointer-events: none;
@@ -115,14 +205,26 @@ body {
     z-index: 3;
 
     transition:
-        opacity 8s ease,
-        transform 8s ease;
 
+        opacity 1.8s ease,
+
+        transform 1.8s ease;
+}
+
+
+/*
+   LA LUZ DE LUNA DESAPARECE
+   CUANDO ENTRA EL NUEVO PAISAJE
+*/
+
+.escena.iniciado .luz-luna {
+
+    opacity: 0;
 }
 
 
 /* ==================================================
-   ESTRELLAS
+   ESTRELLAS DE LA PANTALLA INICIAL
 ================================================== */
 
 .estrellas {
@@ -136,9 +238,20 @@ body {
     z-index: 4;
 
     transition:
-        opacity 8s ease;
 
+        opacity 1.8s ease;
 }
+
+
+/*
+   LAS ESTRELLAS SE VAN SUAVEMENTE
+*/
+
+.escena.iniciado .estrellas {
+
+    opacity: 0;
+}
+
 
 .estrella {
 
@@ -149,33 +262,46 @@ body {
 
     border-radius: 50%;
 
-    background: rgba(220,230,255,0.85);
+    background:
+        rgba(220,230,255,0.85);
 
     box-shadow:
-        0 0 5px rgba(190,215,255,0.7);
+
+        0 0 5px
+        rgba(190,215,255,0.7);
 
     animation:
-        brillar 4s infinite alternate ease-in-out;
 
+        brillar
+        4s
+        infinite
+        alternate
+        ease-in-out;
 }
+
 
 @keyframes brillar {
 
     from {
+
         opacity: 0.25;
-        transform: scale(0.7);
+
+        transform:
+            scale(0.7);
     }
 
     to {
-        opacity: 0.9;
-        transform: scale(1.3);
-    }
 
+        opacity: 0.9;
+
+        transform:
+            scale(1.3);
+    }
 }
 
 
 /* ==================================================
-   NIEBLA
+   NIEBLA DE LA PANTALLA INICIAL
 ================================================== */
 
 .niebla {
@@ -191,32 +317,153 @@ body {
     background:
 
         radial-gradient(
+
             ellipse at center,
+
             rgba(180,200,230,0.13),
+
             transparent 68%
+
         );
 
-    filter: blur(30px);
+    filter:
+        blur(30px);
 
     pointer-events: none;
 
     z-index: 5;
 
     animation:
-        moverNiebla 18s infinite alternate ease-in-out;
 
+        moverNiebla
+        18s
+        infinite
+        alternate
+        ease-in-out;
+
+    transition:
+
+        opacity 1.8s ease;
 }
+
+
+/*
+   QUITAMOS LA NIEBLA DEL PAISAJE NUEVO
+*/
+
+.escena.iniciado .niebla {
+
+    opacity: 0;
+}
+
 
 @keyframes moverNiebla {
 
     from {
-        transform: translateX(-2%);
+
+        transform:
+            translateX(-2%);
     }
 
     to {
-        transform: translateX(2%);
+
+        transform:
+            translateX(2%);
+    }
+}
+
+
+/* ==================================================
+   BRILLO DEL SOL
+   MUY SUAVE Y EN MOVIMIENTO
+================================================== */
+
+.escena::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 520px;
+    height: 520px;
+
+    /*
+       POSICIÓN APROXIMADA DEL SOL
+       EN NUESTRA IMAGEN
+    */
+
+    left: 65%;
+    top: 55%;
+
+    transform:
+
+        translate(-50%, -50%)
+        scale(.82);
+
+    border-radius: 50%;
+
+    background:
+
+        radial-gradient(
+
+            circle,
+
+            rgba(255,215,145,0.20) 0%,
+
+            rgba(255,175,120,0.10) 30%,
+
+            rgba(255,140,100,0) 70%
+
+        );
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    z-index: 8;
+
+    transition:
+
+        opacity 2s ease;
+}
+
+
+/*
+   CUANDO APARECE EL PAISAJE,
+   EL BRILLO COMIENZA A RESPIRAR
+*/
+
+.escena.iniciado::after {
+
+    opacity: 1;
+
+    animation:
+
+        brilloSol
+        5s
+        ease-in-out
+        infinite;
+}
+
+
+@keyframes brilloSol {
+
+    0%,
+    100% {
+
+        transform:
+
+            translate(-50%, -50%)
+            scale(.82);
     }
 
+    50% {
+
+        transform:
+
+            translate(-50%, -50%)
+            scale(1.04);
+    }
 }
 
 
@@ -232,14 +479,25 @@ body {
 
     pointer-events: none;
 
-    z-index: 7;
+    z-index: 9;
 
     opacity: 0;
 
     transition:
-        opacity 8s ease;
 
+        opacity 2s ease;
 }
+
+
+/*
+   APARECEN CON EL PAISAJE
+*/
+
+.escena.iniciado .luciernagas {
+
+    opacity: 1;
+}
+
 
 .luz {
 
@@ -250,35 +508,135 @@ body {
 
     border-radius: 50%;
 
-    background: #e9dc8d;
+    background:
+
+        rgba(255,225,135,0.95);
 
     box-shadow:
 
-        0 0 8px rgba(255,235,130,0.8),
-        0 0 18px rgba(255,210,100,0.45);
+        0 0 8px
+        rgba(255,220,120,0.85),
+
+        0 0 18px
+        rgba(255,185,90,0.45);
 
     animation:
-        flotar 5s infinite alternate ease-in-out;
 
+        luciernaga
+        4s
+        ease-in-out
+        infinite;
 }
 
-@keyframes flotar {
 
-    from {
-        transform: translateY(5px);
-        opacity: 0.3;
+@keyframes luciernaga {
+
+    0% {
+
+        transform:
+
+            translate(0, 0)
+            scale(.7);
+
+        opacity: .25;
     }
 
-    to {
-        transform: translateY(-20px);
-        opacity: 0.9;
+    25% {
+
+        transform:
+
+            translate(12px, -18px)
+            scale(1);
+
+        opacity: 1;
     }
 
+    50% {
+
+        transform:
+
+            translate(-8px, -35px)
+            scale(.85);
+
+        opacity: .65;
+    }
+
+    75% {
+
+        transform:
+
+            translate(15px, -15px)
+            scale(1.1);
+
+        opacity: 1;
+    }
+
+    100% {
+
+        transform:
+
+            translate(0, 0)
+            scale(.7);
+
+        opacity: .25;
+    }
+}
+
+
+/*
+   VARIACIONES PARA QUE NO SE MUEVAN TODAS IGUAL
+*/
+
+.luz:nth-child(2) {
+
+    animation-duration:
+        5.5s;
+}
+
+
+.luz:nth-child(3) {
+
+    animation-duration:
+        4.7s;
+
+    animation-delay:
+        -1.5s;
+}
+
+
+.luz:nth-child(4) {
+
+    animation-duration:
+        6s;
+
+    animation-delay:
+        -2s;
+}
+
+
+.luz:nth-child(5) {
+
+    animation-duration:
+        5s;
+
+    animation-delay:
+        -3s;
+}
+
+
+.luz:nth-child(6) {
+
+    animation-duration:
+        6.5s;
+
+    animation-delay:
+        -1s;
 }
 
 
 /* ==================================================
    PANTALLA DE INICIO
+   CONSERVADA DE TU VERSIÓN ORIGINAL
 ================================================== */
 
 .inicio {
@@ -302,56 +660,69 @@ body {
     padding: 25px;
 
     transition:
-        opacity 2s ease,
-        visibility 2s ease;
 
+        opacity 2s ease,
+
+        visibility 2s ease;
 }
+
 
 .inicio.oculto {
 
     opacity: 0;
 
     visibility: hidden;
-
 }
 
 
 /* ==================================================
-   TEXTO
+   TÍTULO
 ================================================== */
 
 .titulo {
 
-    color: #eef2ff;
+    color:
+        #eef2ff;
 
     font-size:
         clamp(35px, 6vw, 70px);
 
-    font-weight: normal;
+    font-weight:
+        normal;
 
-    letter-spacing: 1px;
+    letter-spacing:
+        1px;
 
     text-shadow:
 
-        0 0 12px rgba(180,200,255,0.45),
-        0 0 30px rgba(90,120,190,0.25);
+        0 0 12px
+        rgba(180,200,255,0.45),
 
-    margin-bottom: 18px;
+        0 0 30px
+        rgba(90,120,190,0.25);
 
+    margin-bottom:
+        18px;
 }
 
+
+/* ==================================================
+   SUBTÍTULO
+================================================== */
 
 .subtitulo {
 
     color:
         rgba(225,232,250,0.82);
 
-    font-size: 17px;
+    font-size:
+        17px;
 
-    letter-spacing: .5px;
+    letter-spacing:
+        .5px;
 
-    margin-bottom: 34px;
-
+    margin-bottom:
+        34px;
 }
 
 
@@ -364,10 +735,12 @@ body {
     padding:
         14px 38px;
 
-    border-radius: 40px;
+    border-radius:
+        40px;
 
     border:
-        1px solid rgba(220,230,255,0.4);
+        1px solid
+        rgba(220,230,255,0.4);
 
     background:
         rgba(20,35,70,0.35);
@@ -375,23 +748,29 @@ body {
     color:
         rgba(240,245,255,0.95);
 
-    font-size: 17px;
+    font-size:
+        17px;
 
-    cursor: pointer;
+    cursor:
+        pointer;
 
-    backdrop-filter: blur(10px);
+    backdrop-filter:
+        blur(10px);
 
     box-shadow:
 
-        0 0 18px rgba(100,130,200,0.18);
+        0 0 18px
+        rgba(100,130,200,0.18);
 
     transition:
 
         transform .3s ease,
-        background .3s ease,
-        box-shadow .3s ease;
 
+        background .3s ease,
+
+        box-shadow .3s ease;
 }
+
 
 .boton:hover {
 
@@ -403,89 +782,10 @@ body {
 
     box-shadow:
 
-        0 0 28px rgba(130,160,230,0.3);
-
+        0 0 28px
+        rgba(130,160,230,0.3);
 }
 
-/* ==================================================
-   AUTOS
-================================================== */
-
-.auto {
-
-    position: absolute;
-
-    border: none;
-
-    background: transparent;
-
-    font-size: 58px;
-
-    cursor: pointer;
-
-    z-index: 12;
-
-    opacity: 0;
-
-    transform:
-        translateY(20px)
-        scale(.8);
-
-    transition:
-        opacity 1.5s ease,
-        transform 1.5s ease,
-        filter .3s ease;
-
-    filter:
-        drop-shadow(0 8px 10px rgba(0,0,0,.45))
-        drop-shadow(0 0 12px rgba(255,120,50,.25));
-
-}
-    
-.auto img {
-
-    width: 150px;
-
-    height: auto;
-
-    display: block;
-
-    pointer-events: none;
-
-}
-    
-.auto-1 {
-
-    left: 24%;
-
-    bottom: 25%;
-
-}
- .auto-2 {
-
-    right: 24%;
-
-    bottom: 25%;
-
- }
-
-.auto.visible {
-
-    opacity: 1;
-
-    transform:
-        translateY(0)
-        scale(1);
-
-}
-
-.auto.visible:hover {
-
-    transform:
-        translateY(-8px)
-        scale(1.08);
-
-}
 
 /* ==================================================
    MENSAJES
@@ -496,209 +796,139 @@ body {
     position: absolute;
 
     left: 50%;
+
     bottom: 10%;
 
     transform:
+
         translate(-50%, 30px);
 
     width:
+
         min(600px, 85%);
 
     padding:
+
         24px 30px;
 
-    border-radius: 20px;
+    border-radius:
+        20px;
 
     background:
+
         rgba(5,12,28,0.48);
 
     border:
-        1px solid rgba(220,230,255,0.16);
+
+        1px solid
+        rgba(220,230,255,0.16);
 
     backdrop-filter:
+
         blur(12px);
 
     color:
+
         rgba(245,247,255,0.92);
 
-    text-align: center;
+    text-align:
+        center;
 
-    font-size: 17px;
+    font-size:
+        17px;
 
-    line-height: 1.6;
+    line-height:
+        1.6;
 
     box-shadow:
-        0 15px 50px rgba(0,0,0,0.25);
 
-    opacity: 0;
+        0 15px 50px
+        rgba(0,0,0,0.25);
 
-    z-index: 15;
+    opacity:
+        0;
+
+    z-index:
+        15;
 
     transition:
+
         opacity 1.4s ease,
+
         transform 1.4s ease;
 
-    cursor: pointer;
-
+    cursor:
+        pointer;
 }
+
 
 .mensaje.visible {
 
-    opacity: 1;
+    opacity:
+        1;
 
     transform:
+
         translate(-50%, 0);
-
 }
 
 
 /* ==================================================
-   TRANSICIÓN NOCHE → ATARDECER
+   ADAPTACIÓN PARA CELULAR
 ================================================== */
 
-.escena.atardecer-1
-.oscuridad {
+@media (max-width: 600px) {
 
-    background:
+    .titulo {
 
-        linear-gradient(
-            to bottom,
-            rgba(15,25,65,0.40),
-            rgba(25,30,70,0.25),
-            rgba(10,15,35,0.45)
-        );
+        font-size:
+            clamp(32px, 10vw, 48px);
+    }
 
-}
+    .subtitulo {
 
-    
-.escena.atardecer-2
-.oscuridad {
+        font-size:
+            15px;
+    }
 
-    background:
+    .mensaje {
 
-        linear-gradient(
-            to bottom,
-            rgba(45,35,80,0.38),
-            rgba(90,55,90,0.22),
-            rgba(20,20,45,0.38)
-        );
+        bottom:
+            7%;
 
-}
+        width:
+            88%;
 
+        padding:
+            20px 22px;
 
-.escena.atardecer-3
-.oscuridad {
+        font-size:
+            15px;
+    }
 
-    background:
+    .escena::after {
 
-        linear-gradient(
-            to bottom,
-            rgba(105,55,90,0.30),
-            rgba(160,75,90,0.18),
-            rgba(35,25,45,0.32)
-        );
+        width:
+            380px;
 
-}
+        height:
+            380px;
 
+        left:
+            62%;
 
-.escena.atardecer-final
-.oscuridad {
-
-    background:
-
-        linear-gradient(
-            to bottom,
-            rgba(190,90,90,0.18),
-            rgba(220,125,100,0.12),
-            rgba(40,30,45,0.25)
-        );
-
-}
-
-
-/* ==================================================
-   LUNA / NOCHE
-================================================== */
-
-.escena.atardecer-2
-.luz-luna {
-
-    opacity: .7;
-
-}
-
-
-.escena.atardecer-3
-.luz-luna {
-
-    opacity: .35;
-
-    transform:
-        scale(.9);
-
-}
-
-
-.escena.atardecer-final
-.luz-luna {
-
-    opacity: 0;
-
-}
-
-
-/* ==================================================
-   ESTRELLAS
-================================================== */
-
-.escena.atardecer-2
-.estrellas {
-
-    opacity: .55;
-
-}
-
-
-.escena.atardecer-3
-.estrellas {
-
-    opacity: .25;
-
-}
-
-
-.escena.atardecer-final
-.estrellas {
-
-    opacity: 0;
-
-}
-
-
-/* ==================================================
-   LUCIÉRNAGAS
-================================================== */
-
-.escena.atardecer-3
-.luciernagas {
-
-    opacity: .45;
-
-}
-
-
-.escena.atardecer-final
-.luciernagas {
-
-    opacity: .9;
-
+        top:
+            52%;
+    }
 }
 
 </style>
+
 </head>
 
 
 <body>
+
 
 <div
     class="escena"
@@ -706,14 +936,15 @@ body {
 >
 
 
-    <!-- OSCURIDAD SUAVE -->
+    <!-- ==================================================
+         ELEMENTOS DE LA PANTALLA INICIAL
+    ================================================== -->
+
 
     <div
         class="oscuridad"
     ></div>
 
-
-    <!-- LUZ DE LUNA -->
 
     <div
         class="luz-luna"
@@ -786,7 +1017,9 @@ body {
     ></div>
 
 
-    <!-- LUCIÉRNAGAS -->
+    <!-- ==================================================
+         LUCIÉRNAGAS
+    ================================================== -->
 
     <div
         class="luciernagas"
@@ -799,35 +1032,35 @@ body {
 
         <span
             class="luz"
-            style="left:31%;bottom:15%;animation-delay:1s;"
+            style="left:31%;bottom:15%;"
         ></span>
 
         <span
             class="luz"
-            style="left:45%;bottom:27%;animation-delay:2s;"
+            style="left:45%;bottom:27%;"
         ></span>
 
         <span
             class="luz"
-            style="left:65%;bottom:20%;animation-delay:.5s;"
+            style="left:65%;bottom:20%;"
         ></span>
 
         <span
             class="luz"
-            style="left:78%;bottom:30%;animation-delay:1.5s;"
+            style="left:78%;bottom:30%;"
         ></span>
 
         <span
             class="luz"
-            style="left:87%;bottom:18%;animation-delay:2.5s;"
+            style="left:87%;bottom:18%;"
         ></span>
 
     </div>
 
 
-    <!-- ======================================
-         INICIO
-    ======================================= -->
+    <!-- ==================================================
+         PANTALLA DE INICIO
+    ================================================== -->
 
     <div
         class="inicio"
@@ -840,11 +1073,13 @@ body {
             Para alguien especial
         </div>
 
+
         <div
             class="subtitulo"
         >
             Hay un pequeño viaje esperándote... 🌙
         </div>
+
 
         <button
             class="boton"
@@ -855,31 +1090,10 @@ body {
 
     </div>
 
-<!-- ======================================
-     PRIMER AUTO
-======================================= -->
 
-<button
-    class="auto auto-1"
-    id="auto1"
-    onclick="abrirAuto(1)"
-    aria-label="Primer mensaje"
->
-     🏎️
-</button>
-
-    <button
-    class="auto auto-2"
-    id="auto2"
-    onclick="abrirAuto(2)"
-    aria-label="Segundo mensaje"
->
-    🏎️
-</button>
-    
-    <!-- ======================================
+    <!-- ==================================================
          MENSAJE
-    ======================================= -->
+    ================================================== -->
 
     <div
         class="mensaje"
@@ -898,9 +1112,10 @@ body {
 
 <script>
 
-/* ==========================================
+
+/* ==================================================
    VARIABLES
-========================================== */
+================================================== */
 
 let paso = 0;
 
@@ -929,9 +1144,9 @@ const textoMensaje =
     );
 
 
-/* ==========================================
+/* ==================================================
    MENSAJES
-========================================== */
+================================================== */
 
 const mensajes = [
 
@@ -950,33 +1165,55 @@ const mensajes = [
 ];
 
 
-/* ==========================================
+/* ==================================================
    COMENZAR
-========================================== */
+================================================== */
 
 function comenzar() {
+
+
+    /*
+       OCULTAMOS LA PANTALLA INICIAL
+    */
 
     inicio.classList.add(
         "oculto"
     );
 
 
+    /*
+       COMIENZA A APARECER EL PAISAJE
+    */
+
     setTimeout(() => {
 
-         document
-            .getElementById("auto1")
-            .classList.add("visible");
+        escena.classList.add(
+            "iniciado"
+        );
 
-    }, 1600);
+    }, 200);
+
+
+    /*
+       DESPUÉS DE LA TRANSICIÓN
+       APARECE EL PRIMER MENSAJE
+    */
+
+    setTimeout(() => {
+
+        mostrarMensaje();
+
+    }, 2200);
 
 }
 
 
-/* ==========================================
+/* ==================================================
    MOSTRAR MENSAJE
-========================================== */
+================================================== */
 
 function mostrarMensaje() {
+
 
     if (
         paso >= mensajes.length
@@ -987,9 +1224,19 @@ function mostrarMensaje() {
     }
 
 
+    /*
+       CAMBIAMOS EL TEXTO
+    */
+
     textoMensaje.innerText =
         mensajes[paso];
 
+
+    /*
+       LO OCULTAMOS UN MOMENTO
+       PARA QUE CADA MENSAJE
+       ENTRE SUAVEMENTE
+    */
 
     mensaje.classList.remove(
         "visible"
@@ -1002,12 +1249,7 @@ function mostrarMensaje() {
             "visible"
         );
 
-    }, 250);
-
-
-    cambiarPaisaje(
-        paso
-    );
+    }, 180);
 
 
     paso++;
@@ -1015,112 +1257,23 @@ function mostrarMensaje() {
 }
 
 
-/* ==========================================
-   CAMBIAR PAISAJE
-========================================== */
-
-function cambiarPaisaje(
-    numero
-) {
-
-    escena.classList.remove(
-
-        "atardecer-1",
-        "atardecer-2",
-        "atardecer-3",
-        "atardecer-final"
-
-    );
-
-
-    if (
-        numero === 1
-    ) {
-
-        escena.classList.add(
-            "atardecer-1"
-        );
-
-    }
-
-
-    if (
-        numero === 2
-    ) {
-
-        escena.classList.add(
-            "atardecer-2"
-        );
-
-    }
-
-
-    if (
-        numero === 3
-    ) {
-
-        escena.classList.add(
-            "atardecer-3"
-        );
-
-    }
-
-
-    if (
-        numero >= 4
-    ) {
-
-        escena.classList.add(
-            "atardecer-final"
-        );
-
-    }
-
-}
-
-
-/* ==========================================
-   TOCAR MENSAJE PARA CONTINUAR
-========================================== */
+/* ==================================================
+   TOCAR EL MENSAJE
+   PARA CONTINUAR
+================================================== */
 
 mensaje.addEventListener(
+
     "click",
+
     mostrarMensaje
+
 );
-    
-function abrirAuto(numero) {
-
-    if (numero === 1) {
-
-        document
-            .getElementById("auto1")
-            .classList.remove("visible");
-
-        mostrarMensaje();
-
-        setTimeout(() => {
-
-            document
-                .getElementById("auto2")
-                .classList.add("visible");
-
-        }, 1800);
-
-    }
 
 
-    if (numero === 2) {
-
-        document
-            .getElementById("auto2")
-            .classList.remove("visible");
-
-        mostrarMensaje();
-
-    }
-
-}
 </script>
 
+
 </body>
+
 </html>
