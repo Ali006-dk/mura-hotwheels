@@ -1,266 +1,967 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para Mura 🌙</title>
+
+    <title>Para ti 🌙</title>
 
     <style>
+
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
         }
 
         body {
-            min-height: 100vh;
-            overflow: hidden;
-            font-family: Georgia, serif;
+            font-family: Georgia, "Times New Roman", serif;
             color: white;
+            background: #050b18;
         }
 
-        /* CIELO */
 
-        .cielo {
+        /* =====================================================
+           ESCENA PRINCIPAL
+        ===================================================== */
+
+        .escena {
+
             position: relative;
+
             width: 100%;
             height: 100vh;
+
             overflow: hidden;
+
             background:
-                radial-gradient(circle at 50% 25%, #263c68 0%, #142442 35%, #07111f 75%);
+
+                radial-gradient(
+                    ellipse at 50% 25%,
+                    rgba(49, 79, 130, 0.65),
+                    transparent 45%
+                ),
+
+                linear-gradient(
+                    to bottom,
+                    #050a19 0%,
+                    #08162b 45%,
+                    #102a38 75%,
+                    #0b2524 100%
+                );
+
+            transition:
+                background 5s ease;
         }
 
-        /* LUNA */
+
+        /* =====================================================
+           RESPLANDOR GENERAL DEL CIELO
+        ===================================================== */
+
+        .resplandor {
+
+            position: absolute;
+
+            width: 70vw;
+            height: 70vw;
+
+            max-width: 900px;
+            max-height: 900px;
+
+            top: -35%;
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            border-radius: 50%;
+
+            background:
+
+                radial-gradient(
+                    circle,
+                    rgba(92, 130, 190, 0.16),
+                    rgba(50, 80, 130, 0.05) 45%,
+                    transparent 70%
+                );
+
+            pointer-events: none;
+        }
+
+
+        /* =====================================================
+           LUNA
+        ===================================================== */
 
         .luna {
+
             position: absolute;
+
             top: 10%;
-            right: 15%;
-            width: 120px;
-            height: 120px;
+            right: 13%;
+
+            width: 125px;
+            height: 125px;
+
             border-radius: 50%;
-            background: #fff8d8;
+
+            background:
+
+                radial-gradient(
+                    circle at 35% 35%,
+                    #fffde8 0%,
+                    #fff8d0 55%,
+                    #e8e5c8 100%
+                );
+
             box-shadow:
-                0 0 25px #fff8d8,
-                0 0 60px rgba(255, 248, 216, 0.35);
+
+                0 0 20px rgba(255, 249, 211, 0.7),
+                0 0 60px rgba(192, 207, 255, 0.25),
+                0 0 120px rgba(137, 169, 235, 0.12);
+
+            animation:
+                respirarLuna 6s ease-in-out infinite;
+
+            z-index: 3;
         }
 
-        /* ESTRELLAS */
+
+        @keyframes respirarLuna {
+
+            0%,
+            100% {
+                box-shadow:
+                    0 0 20px rgba(255, 249, 211, 0.7),
+                    0 0 60px rgba(192, 207, 255, 0.25),
+                    0 0 120px rgba(137, 169, 235, 0.12);
+            }
+
+            50% {
+                box-shadow:
+                    0 0 28px rgba(255, 249, 211, 0.85),
+                    0 0 80px rgba(192, 207, 255, 0.32),
+                    0 0 140px rgba(137, 169, 235, 0.18);
+            }
+        }
+
+
+        /* =====================================================
+           ESTRELLAS
+        ===================================================== */
+
+        .estrellas {
+
+            position: absolute;
+
+            inset: 0;
+
+            z-index: 2;
+
+            pointer-events: none;
+        }
+
 
         .estrella {
+
             position: absolute;
-            width: 4px;
-            height: 4px;
-            background: white;
+
+            width: 3px;
+            height: 3px;
+
             border-radius: 50%;
-            box-shadow: 0 0 8px white;
-            animation: brillar 3s infinite alternate;
+
+            background: #ffffff;
+
+            box-shadow:
+                0 0 5px rgba(255,255,255,0.9),
+                0 0 12px rgba(191,216,255,0.5);
+
+            animation:
+                titilar var(--duracion) ease-in-out infinite alternate;
+
+            animation-delay: var(--retraso);
         }
 
-        .e1 { top: 15%; left: 12%; }
-        .e2 { top: 25%; left: 30%; animation-delay: 1s; }
-        .e3 { top: 12%; left: 55%; animation-delay: 2s; }
-        .e4 { top: 35%; left: 70%; animation-delay: 0.5s; }
-        .e5 { top: 18%; left: 82%; animation-delay: 1.5s; }
-        .e6 { top: 42%; left: 20%; animation-delay: 2.5s; }
-        .e7 { top: 30%; left: 45%; animation-delay: 1.2s; }
-        .e8 { top: 20%; left: 92%; animation-delay: 0.8s; }
 
-        @keyframes brillar {
+        @keyframes titilar {
+
             from {
-                opacity: 0.3;
+                opacity: 0.2;
                 transform: scale(0.7);
             }
 
             to {
                 opacity: 1;
-                transform: scale(1.3);
+                transform: scale(1.35);
             }
         }
 
-        /* MONTAÑAS */
 
-        .montana {
+        /* =====================================================
+           NUBES
+        ===================================================== */
+
+        .nubes {
+
             position: absolute;
-            bottom: 0;
-            width: 0;
-            height: 0;
-            border-left: 180px solid transparent;
-            border-right: 180px solid transparent;
-            border-bottom: 260px solid #081a27;
+
+            inset: 0;
+
+            overflow: hidden;
+
+            z-index: 4;
+
+            pointer-events: none;
+
+            opacity: 0.28;
         }
 
-        .m1 {
-            left: -100px;
-        }
 
-        .m2 {
-            left: 25%;
-            border-bottom-height: 320px;
-        }
+        .nube {
 
-        .m3 {
-            right: -100px;
-        }
-
-        /* PAISAJE */
-
-        .suelo {
             position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 25%;
-            background: linear-gradient(
-                to bottom,
-                #102d2b,
-                #071a19
-            );
-        }
 
-        /* LUCES */
+            width: 320px;
+            height: 75px;
 
-        .luz {
-            position: absolute;
-            width: 7px;
-            height: 7px;
             border-radius: 50%;
-            background: #d9ffd8;
-            box-shadow: 0 0 15px #d9ffd8;
-            animation: flotar 4s infinite alternate ease-in-out;
+
+            background:
+                rgba(150, 173, 206, 0.16);
+
+            filter: blur(12px);
+
+            animation:
+                moverNube 35s linear infinite;
         }
 
-        .l1 { bottom: 22%; left: 15%; }
-        .l2 { bottom: 30%; left: 28%; animation-delay: 1s; }
-        .l3 { bottom: 20%; left: 45%; animation-delay: 2s; }
-        .l4 { bottom: 28%; left: 62%; animation-delay: 0.5s; }
-        .l5 { bottom: 18%; left: 80%; animation-delay: 1.5s; }
 
-        @keyframes flotar {
+        .nube::before,
+        .nube::after {
+
+            content: "";
+
+            position: absolute;
+
+            border-radius: 50%;
+
+            background:
+                rgba(160, 181, 215, 0.15);
+        }
+
+
+        .nube::before {
+
+            width: 150px;
+            height: 100px;
+
+            left: 50px;
+            bottom: 10px;
+        }
+
+
+        .nube::after {
+
+            width: 180px;
+            height: 120px;
+
+            right: 30px;
+            bottom: 5px;
+        }
+
+
+        .nube:nth-child(1) {
+
+            top: 20%;
+            left: -350px;
+
+            animation-duration: 45s;
+        }
+
+
+        .nube:nth-child(2) {
+
+            top: 32%;
+            left: -500px;
+
+            animation-duration: 60s;
+
+            animation-delay: 10s;
+
+            transform: scale(0.7);
+        }
+
+
+        @keyframes moverNube {
+
             from {
-                transform: translateY(0);
-                opacity: 0.4;
+                transform: translateX(0);
             }
 
             to {
-                transform: translateY(-15px);
+                transform: translateX(calc(100vw + 700px));
+            }
+        }
+
+
+        /* =====================================================
+           BOSQUE DEL FONDO
+        ===================================================== */
+
+        .bosque {
+
+            position: absolute;
+
+            bottom: 0;
+            left: 0;
+
+            width: 100%;
+            height: 48%;
+
+            z-index: 6;
+
+            pointer-events: none;
+        }
+
+
+        .capa-bosque {
+
+            position: absolute;
+
+            bottom: 0;
+
+            width: 100%;
+            height: 100%;
+        }
+
+
+        /* bosque lejano */
+
+        .bosque-lejano {
+
+            background:
+
+                linear-gradient(
+                    to top,
+                    rgba(5, 22, 28, 0.95),
+                    rgba(7, 29, 39, 0.55)
+                );
+
+            clip-path: polygon(
+
+                0 55%,
+                4% 45%,
+                8% 58%,
+                13% 38%,
+                18% 53%,
+                23% 35%,
+                28% 55%,
+                33% 42%,
+                39% 57%,
+                44% 34%,
+                50% 54%,
+                56% 40%,
+                62% 58%,
+                68% 36%,
+                74% 54%,
+                80% 40%,
+                86% 57%,
+                92% 35%,
+                97% 52%,
+                100% 42%,
+                100% 100%,
+                0 100%
+            );
+        }
+
+
+        /* bosque medio */
+
+        .bosque-medio {
+
+            height: 82%;
+
+            opacity: 0.8;
+
+            background:
+
+                linear-gradient(
+                    to top,
+                    #061c22,
+                    #0b2830
+                );
+
+            clip-path: polygon(
+
+                0 62%,
+                5% 46%,
+                10% 62%,
+                15% 40%,
+                20% 58%,
+                25% 45%,
+                30% 64%,
+                35% 39%,
+                40% 60%,
+                45% 44%,
+                50% 61%,
+                55% 40%,
+                60% 60%,
+                65% 45%,
+                70% 62%,
+                75% 41%,
+                80% 60%,
+                85% 43%,
+                90% 62%,
+                95% 45%,
+                100% 58%,
+                100% 100%,
+                0 100%
+            );
+        }
+
+
+        /* bosque delantero */
+
+        .bosque-delante {
+
+            height: 60%;
+
+            background:
+
+                linear-gradient(
+                    to top,
+                    #041518,
+                    #082027
+                );
+
+            clip-path: polygon(
+
+                0 65%,
+                6% 43%,
+                12% 65%,
+                18% 35%,
+                24% 64%,
+                30% 42%,
+                36% 67%,
+                43% 38%,
+                50% 66%,
+                57% 40%,
+                64% 64%,
+                70% 36%,
+                76% 65%,
+                82% 43%,
+                88% 66%,
+                94% 38%,
+                100% 63%,
+                100% 100%,
+                0 100%
+            );
+        }
+
+
+        /* =====================================================
+           NIEBLA
+        ===================================================== */
+
+        .niebla {
+
+            position: absolute;
+
+            bottom: 18%;
+
+            left: -10%;
+
+            width: 120%;
+
+            height: 130px;
+
+            z-index: 8;
+
+            background:
+
+                radial-gradient(
+                    ellipse,
+                    rgba(160, 204, 197, 0.12),
+                    transparent 70%
+                );
+
+            filter: blur(25px);
+
+            animation:
+                moverNiebla 12s ease-in-out infinite alternate;
+        }
+
+
+        @keyframes moverNiebla {
+
+            from {
+                transform: translateX(-3%);
+            }
+
+            to {
+                transform: translateX(3%);
+            }
+        }
+
+
+        /* =====================================================
+           LUCIÉRNAGAS
+        ===================================================== */
+
+        .luciernagas {
+
+            position: absolute;
+
+            inset: 0;
+
+            z-index: 9;
+
+            pointer-events: none;
+
+            opacity: 0;
+
+            transition: opacity 5s ease;
+        }
+
+
+        .luciernaga {
+
+            position: absolute;
+
+            width: 5px;
+            height: 5px;
+
+            border-radius: 50%;
+
+            background: #e5ffd0;
+
+            box-shadow:
+
+                0 0 8px #e5ffd0,
+                0 0 20px rgba(196,255,174,0.7);
+
+            animation:
+                volar 5s ease-in-out infinite alternate;
+        }
+
+
+        .l1 {
+            left: 15%;
+            bottom: 24%;
+        }
+
+        .l2 {
+            left: 28%;
+            bottom: 18%;
+            animation-delay: 1s;
+        }
+
+        .l3 {
+            left: 47%;
+            bottom: 27%;
+            animation-delay: 2s;
+        }
+
+        .l4 {
+            left: 64%;
+            bottom: 21%;
+            animation-delay: 0.5s;
+        }
+
+        .l5 {
+            left: 79%;
+            bottom: 30%;
+            animation-delay: 1.5s;
+        }
+
+
+        @keyframes volar {
+
+            from {
+                transform:
+                    translate(0, 0)
+                    scale(0.8);
+
+                opacity: 0.35;
+            }
+
+            to {
+                transform:
+                    translate(12px, -25px)
+                    scale(1.25);
+
                 opacity: 1;
             }
         }
 
-        /* CONTENIDO */
+
+        /* =====================================================
+           CAPA DE LUZ
+        ===================================================== */
+
+        .luz-atardecer {
+
+            position: absolute;
+
+            inset: 0;
+
+            z-index: 10;
+
+            pointer-events: none;
+
+            opacity: 0;
+
+            background:
+
+                radial-gradient(
+                    ellipse at 50% 65%,
+                    rgba(255, 178, 139, 0.32),
+                    rgba(255, 133, 120, 0.12) 35%,
+                    transparent 68%
+                );
+
+            transition:
+                opacity 6s ease;
+        }
+
+
+        /* =====================================================
+           PANTALLA INICIAL
+        ===================================================== */
 
         .inicio {
-            position: relative;
-            z-index: 10;
-            height: 100vh;
+
+            position: absolute;
+
+            inset: 0;
+
+            z-index: 20;
+
             display: flex;
+
             flex-direction: column;
+
             justify-content: center;
+
             align-items: center;
+
             text-align: center;
-            padding: 25px;
+
+            padding: 30px;
+
+            transition:
+                opacity 2.5s ease,
+                transform 2.5s ease;
         }
+
+
+        .inicio.desaparecer {
+
+            opacity: 0;
+
+            transform:
+                translateY(-20px);
+
+            pointer-events: none;
+        }
+
 
         .inicio h1 {
-            font-size: clamp(42px, 8vw, 75px);
-            margin-bottom: 15px;
-            text-shadow: 0 0 20px rgba(255,255,255,0.35);
+
+            font-size:
+                clamp(38px, 7vw, 72px);
+
+            font-weight: normal;
+
+            letter-spacing: 1px;
+
+            text-shadow:
+
+                0 0 12px rgba(255,255,255,0.25),
+                0 0 35px rgba(126,164,221,0.18);
+
+            margin-bottom: 18px;
         }
 
+
         .inicio p {
-            font-size: clamp(18px, 3vw, 25px);
+
+            font-size:
+                clamp(17px, 3vw, 23px);
+
+            opacity: 0.82;
+
             margin-bottom: 35px;
+
+            letter-spacing: 0.5px;
+        }
+
+
+        /* =====================================================
+           BOTÓN
+        ===================================================== */
+
+        .boton {
+
+            border: 1px solid rgba(255,255,255,0.32);
+
+            background:
+                rgba(255,255,255,0.08);
+
+            color: white;
+
+            padding:
+                14px 34px;
+
+            border-radius: 50px;
+
+            font-family:
+                Georgia,
+                serif;
+
+            font-size: 18px;
+
+            letter-spacing: 0.5px;
+
+            cursor: pointer;
+
+            backdrop-filter: blur(10px);
+
+            box-shadow:
+                0 0 25px rgba(120,165,220,0.12);
+
+            transition:
+                transform 0.3s ease,
+                background 0.3s ease,
+                box-shadow 0.3s ease;
+        }
+
+
+        .boton:hover {
+
+            transform:
+                translateY(-3px)
+                scale(1.04);
+
+            background:
+                rgba(255,255,255,0.14);
+
+            box-shadow:
+                0 0 35px rgba(145,190,240,0.25);
+        }
+
+
+        /* =====================================================
+           CONTROLES DEL FUTURO RECORRIDO
+        ===================================================== */
+
+        .mensaje {
+
+            position: absolute;
+
+            z-index: 30;
+
+            left: 50%;
+            top: 50%;
+
+            transform:
+                translate(-50%, -50%);
+
+            width:
+                min(620px, 88%);
+
+            text-align: center;
+
+            opacity: 0;
+
+            pointer-events: none;
+
+            transition:
+                opacity 1.5s ease;
+        }
+
+
+        .mensaje.visible {
+
+            opacity: 1;
+
+            pointer-events: auto;
+        }
+
+
+        .mensaje h2 {
+
+            font-size:
+                clamp(28px, 5vw, 48px);
+
+            font-weight: normal;
+
+            margin-bottom: 18px;
+
+            text-shadow:
+                0 0 25px rgba(255,255,255,0.25);
+        }
+
+
+        .mensaje p {
+
+            font-size:
+                clamp(17px, 3vw, 21px);
+
+            line-height: 1.7;
+
             opacity: 0.9;
         }
 
-        button {
-            border: 1px solid rgba(255,255,255,0.5);
-            padding: 15px 35px;
-            border-radius: 40px;
-            font-size: 19px;
-            cursor: pointer;
-            background: rgba(255,255,255,0.12);
-            color: white;
-            backdrop-filter: blur(8px);
-            transition: 0.3s;
-        }
 
-        button:hover {
-            transform: scale(1.08);
-            background: rgba(255,255,255,0.2);
-        }
-
-        /* COCHE */
-
-        .coche {
-            position: absolute;
-            bottom: 12%;
-            left: -100px;
-            font-size: 45px;
-            animation: conducir 8s linear infinite;
-            z-index: 5;
-        }
-
-        @keyframes conducir {
-            from {
-                left: -100px;
-            }
-
-            to {
-                left: 110%;
-            }
-        }
     </style>
 </head>
 
+
 <body>
 
-    <main class="cielo">
+
+    <main class="escena">
+
+
+        <!-- Resplandor del cielo -->
+
+        <div class="resplandor"></div>
+
+
+        <!-- Luna -->
 
         <div class="luna"></div>
 
-        <div class="estrella e1"></div>
-        <div class="estrella e2"></div>
-        <div class="estrella e3"></div>
-        <div class="estrella e4"></div>
-        <div class="estrella e5"></div>
-        <div class="estrella e6"></div>
-        <div class="estrella e7"></div>
-        <div class="estrella e8"></div>
 
-        <div class="montana m1"></div>
-        <div class="montana m2"></div>
-        <div class="montana m3"></div>
+        <!-- Estrellas -->
 
-        <div class="suelo"></div>
+        <div class="estrellas">
 
-        <div class="luz l1"></div>
-        <div class="luz l2"></div>
-        <div class="luz l3"></div>
-        <div class="luz l4"></div>
-        <div class="luz l5"></div>
+            <span class="estrella" style="top:12%; left:8%; --duracion:3s; --retraso:0s;"></span>
+            <span class="estrella" style="top:18%; left:18%; --duracion:4s; --retraso:1s;"></span>
+            <span class="estrella" style="top:9%; left:29%; --duracion:3.5s; --retraso:0.5s;"></span>
+            <span class="estrella" style="top:25%; left:36%; --duracion:5s; --retraso:2s;"></span>
+            <span class="estrella" style="top:14%; left:45%; --duracion:3s; --retraso:1.5s;"></span>
+            <span class="estrella" style="top:28%; left:53%; --duracion:4s; --retraso:0.3s;"></span>
+            <span class="estrella" style="top:11%; left:63%; --duracion:3.5s; --retraso:2s;"></span>
+            <span class="estrella" style="top:22%; left:72%; --duracion:4.5s; --retraso:1s;"></span>
+            <span class="estrella" style="top:15%; left:84%; --duracion:3s; --retraso:0.8s;"></span>
+            <span class="estrella" style="top:34%; left:91%; --duracion:5s; --retraso:1.7s;"></span>
 
-        <div class="coche">🏎️</div>
+            <span class="estrella" style="top:38%; left:12%; --duracion:4s; --retraso:0.4s;"></span>
+            <span class="estrella" style="top:42%; left:27%; --duracion:3s; --retraso:1.2s;"></span>
+            <span class="estrella" style="top:36%; left:48%; --duracion:5s; --retraso:2.2s;"></span>
+            <span class="estrella" style="top:45%; left:68%; --duracion:3.5s; --retraso:0.6s;"></span>
+
+        </div>
+
+
+        <!-- Nubes -->
+
+        <div class="nubes">
+
+            <div class="nube"></div>
+            <div class="nube"></div>
+
+        </div>
+
+
+        <!-- Bosque -->
+
+        <div class="bosque">
+
+            <div class="capa-bosque bosque-lejano"></div>
+
+            <div class="capa-bosque bosque-medio"></div>
+
+            <div class="capa-bosque bosque-delante"></div>
+
+        </div>
+
+
+        <!-- Niebla -->
+
+        <div class="niebla"></div>
+
+
+        <!-- Luciérnagas -->
+
+        <div class="luciernagas">
+
+            <span class="luciernaga l1"></span>
+            <span class="luciernaga l2"></span>
+            <span class="luciernaga l3"></span>
+            <span class="luciernaga l4"></span>
+            <span class="luciernaga l5"></span>
+
+        </div>
+
+
+        <!-- Luz del futuro atardecer -->
+
+        <div class="luz-atardecer"></div>
+
+
+        <!-- Pantalla inicial -->
 
         <section class="inicio">
 
-            <h1>Hey, Mura...</h1>
+            <h1>Para alguien especial</h1>
 
-            <p>Preparé una pequeña cosa para ti. 💗</p>
+            <p>
+                Hay un pequeño viaje esperándote... 🌙
+            </p>
 
-            <button onclick="comenzar()">
-                Empezar 🏎️
+            <button
+                class="boton"
+                onclick="comenzar()">
+
+                Empezar ✦
+
             </button>
 
         </section>
 
+
+        <!-- Sistema de mensajes -->
+
+        <section class="mensaje">
+
+            <h2></h2>
+
+            <p></p>
+
+        </section>
+
+
     </main>
 
+
     <script>
+
         function comenzar() {
-            alert("Nuestro viaje comienza aquí 🏎️🌙");
+
+            const inicio =
+                document.querySelector(".inicio");
+
+            inicio.classList.add("desaparecer");
+
         }
+
+
     </script>
 
+
 </body>
+
 </html>
