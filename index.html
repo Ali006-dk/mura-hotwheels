@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Para Mura 🌙</title>
+<title>Para Tu 🌙</title>
 
 <style>
 
@@ -407,6 +407,66 @@ body {
 
 }
 
+/* ==================================================
+   AUTOS
+================================================== */
+
+.auto {
+
+    position: absolute;
+
+    border: none;
+
+    background: transparent;
+
+    font-size: 58px;
+
+    cursor: pointer;
+
+    z-index: 12;
+
+    opacity: 0;
+
+    transform:
+        translateY(20px)
+        scale(.8);
+
+    transition:
+        opacity 1.5s ease,
+        transform 1.5s ease,
+        filter .3s ease;
+
+    filter:
+        drop-shadow(0 8px 10px rgba(0,0,0,.45))
+        drop-shadow(0 0 12px rgba(255,120,50,.25));
+
+}
+
+.auto-1 {
+
+    left: 24%;
+
+    bottom: 25%;
+
+}
+
+.auto.visible {
+
+    opacity: 1;
+
+    transform:
+        translateY(0)
+        scale(1);
+
+}
+
+.auto.visible:hover {
+
+    transform:
+        translateY(-8px)
+        scale(1.08);
+
+}
 
 /* ==================================================
    MENSAJES
@@ -776,7 +836,20 @@ body {
 
     </div>
 
+<!-- ======================================
+     PRIMER AUTO
+======================================= -->
 
+<button
+    class="auto auto-1"
+    id="auto1"
+    onclick="abrirAuto(1)"
+    aria-label="Primer mensaje"
+>
+    🏎️
+</button>
+
+    
     <!-- ======================================
          MENSAJE
     ======================================= -->
@@ -863,7 +936,9 @@ function comenzar() {
 
     setTimeout(() => {
 
-        mostrarMensaje();
+         document
+            .getElementById("auto1")
+            .classList.add("visible");
 
     }, 1600);
 
@@ -985,7 +1060,20 @@ mensaje.addEventListener(
     "click",
     mostrarMensaje
 );
+    
+function abrirAuto(numero) {
 
+    if (numero === 1) {
+
+        document
+            .getElementById("auto1")
+            .classList.remove("visible");
+
+        mostrarMensaje();
+
+    }
+
+}
 </script>
 
 </body>
