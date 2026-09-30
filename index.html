@@ -1098,6 +1098,25 @@ function abrirAuto(numero) {
 
         mostrarMensaje();
 
+        setTimeout(() => {
+
+            document
+                .getElementById("auto2")
+                .classList.add("visible");
+
+        }, 1800);
+
+    }
+
+
+    if (numero === 2) {
+
+        document
+            .getElementById("auto2")
+            .classList.remove("visible");
+
+        mostrarMensaje();
+
     }
 
 }
